@@ -6,7 +6,9 @@ import numpy as np
 from keras.models import load_model
 from keras.applications.vgg19 import VGG19, preprocess_input, decode_predictions
 
-UPLOAD_FOLDER = './uploads'
+#UPLOAD_FOLDER = r"C:\Users\karti\.vscode\plant_disease_prediction\dataset"
+#UPLOAD_FOLDER = './uploads'
+UPLOAD_FOLDER = r'C:\Users\karti\.vscode\plant_disease_prediction\UPLOAD_FOLDER'
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg'])
 
 app = Flask(__name__)
@@ -53,10 +55,10 @@ ref ={0: 'Apple___Apple_scab',
 
 def prediction(path):
     img = Image.open(path)
-    img = img.resize((256,256),Image.ANTIALIAS)
+    img = img.resize((224,224),Image.ANTIALIAS)
     img = np.asarray(img)
-    im = preprocess_input(img)
-    img = np.expand_dims(im,axis = 0)
+   # im = preprocess_input(img)
+    img = np.expand_dims(img,axis = 0)
     pred = np.argmax(model.predict(img))
     print(f'The image belongs to {ref[pred]}')
     return ref[pred]
@@ -74,5 +76,7 @@ def hello_world():
 	return render_template("index.html")
 
 if __name__ == '__main__':
-    model = load_model("./model/best_model.h5")
+    model = load_model(r"C:\Users\karti\.vscode\plant_disease_prediction\model\RESNET50_PLANT_DISEASE.h5")
+    #model = load_model(r"C:\Users\karti\.vscode\plant_disease_prediction\model\best_model.h5")
     app.run()
+#C:\Users\karti\.vscode\plant_disease_prediction\dataset\AppleCedarRust1.JPG
